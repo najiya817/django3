@@ -19,7 +19,7 @@
       <h3>ADD MARK HERE!!!</h3>
       <form action="" method="post">
       {% csrf_token %}
-      {{form}}
+      {{form.as_p}}
       <button class="bg-info">ADD</button><br>
       <h2>result:{{data}}</h2>
       </form> 
