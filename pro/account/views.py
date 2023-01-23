@@ -1,5 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import View
+from .forms import RegisterForm,LoginForm
 
 # Create your views here.
 class HomeView(View):
@@ -8,8 +10,16 @@ class HomeView(View):
 
 class RegView(View):
         def get(self,request,*args,**kwargs):
-            return render(request,"reg.html")
+            f=RegisterForm()
+            return render(request,"reg.html",{"data":f})
+        def post(self,request,*args,**kwargs):
+            return HttpResponse("yeah")
+             
 
 class LogView(View):
         def get(self,request,*args,**kwargs):
-            return render(request,"log.html")
+            f=LoginForm()
+            return render(request,"log.html",{"data:f"})
+        def post(self,request,*args,**kwargs):
+            return HttpResponse("hoo")
+

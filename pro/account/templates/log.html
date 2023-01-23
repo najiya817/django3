@@ -17,5 +17,10 @@
   </head>
   <body>
       <h1>LOGIN HERE!!!</h1>
+      <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-info">create</button>
+      </form>
   </body>
 </html>

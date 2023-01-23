@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LogView, RegView
+from .views import RegView,LogView
 
 urlpatterns=[
     path('reg/',RegView.as_view(),name='reg'),
