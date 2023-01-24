@@ -9,17 +9,26 @@ class AddMark(View):
         f=AddMarkForm()
         return render(request,"addmark.html",{"form":f})
     def post(self,request,*args,**kwargs):
-        num1=request.POST.get("mark1")
-        num2=request.POST.get("mark2")
-        num3=request.POST.get("mark3")
-        num4=request.POST.get("mark4")
-        num5=request.POST.get("mark5")
-        res=int(num1)+int(num2)+int(num3)+int(num4)+int(num5)
-        return render(request,"addmark.html",{"data":res})
+        form_data=AddMarkForm(data=request.POST)
+        if form_data.is_valid():
+            num1=request.POST.get("mark1")
+            num2=request.POST.get("mark2")
+            num3=request.POST.get("mark3")
+            num4=request.POST.get("mark4")
+            num5=request.POST.get("mark5")
+            res=int(num1)+int(num2)+int(num3)+int(num4)+int(num5)
+            return render(request,"addmark.html",{"data":res})
+        else:
+            return HttpResponse("invalid")
     
 class AddStudentView(View):
     def get(self,request,*args,**kwargs):
         f=StudentForm()
         return render(request,"addstu.html",{"form":f})
     def post(self,request,*args,**kwargs):
-        return HttpResponse("username:"+request.POST.get("first_name")+"<br>age:"+request.POST.get("age")+"<br>email:"+request.POST.get("email"))
+        form_data=AddMarkForm(data=request.POST)
+        if form_data.is_valid():
+            return HttpResponse("username:"+request.POST.get("first_name")+"<br>age:"+request.POST.get("age")+"<br>email:"+request.POST.get("email"))
+        else:
+            return HttpResponse("invalid")
+    
