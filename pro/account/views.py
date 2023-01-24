@@ -9,17 +9,17 @@ class HomeView(View):
         return render(request,"main_home.html")
 
 class RegView(View):
-        def get(self,request,*args,**kwargs):
-            f=RegisterForm()
-            return render(request,"reg.html",{"data":f})
-        def post(self,request,*args,**kwargs):
-            return HttpResponse("yeah")
+    def get(self,request,*args,**kwargs):
+        f=RegisterForm()
+        return render(request,"reg.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        return HttpResponse("yeah")
              
 
 class LogView(View):
-        def get(self,request,*args,**kwargs):
-            f=LoginForm()
-            return render(request,"log.html",{"data:f"})
-        def post(self,request,*args,**kwargs):
-            return HttpResponse("hoo")
+    def get(self,request,*args,**kwargs):
+        f=LoginForm()
+        return render(request,"log.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        return HttpResponse("hoo")
 
