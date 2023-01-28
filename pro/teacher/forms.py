@@ -31,12 +31,12 @@ class AddMarkForm(forms.Form):
             self.add_error("mark5",msg)
 
 class StudentForm(forms.Form):
-    first_name=forms.CharField(max_length=100)
-    last_name=forms.CharField(max_length=100)
-    age=forms.IntegerField()
-    address=forms.CharField(max_length=100)
-    email=forms.EmailField()
-    phone=forms.IntegerField()
+    first_name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"enter ur firtst_name"}))
+    last_name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"entre ur last name"}))
+    age=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-control","placeholder":"entre ur age"}))
+    address=forms.CharField(max_length=100,widget=forms.Textarea(attrs={"class":"form-control","placeholder":"enter address"}))
+    email=forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control","placeholder":"entre ur email"}))
+    phone=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-control","placeholder":"entre ur phonenumber"}))
     
     def clean(self):
         cleaned_data=super().clean()
