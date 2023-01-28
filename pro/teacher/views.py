@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import View
 from .forms import AddMarkForm,StudentForm
+from django.contrib import messages
 
 # Create your views here.
 class AddMark(View):
@@ -32,6 +33,8 @@ class AddStudentView(View):
            ln=form_data.cleaned_data.get("last_name")
            ag=form_data.cleaned_data.get("age")
            ph=form_data.cleaned_data.get("phone")
+           messages.success(request,"student added succesfull")
            return redirect("h")
         else:
+            messages.error(request,"student adding failed!!")
             return render(request,"addstu.html",{"form":form_data})
