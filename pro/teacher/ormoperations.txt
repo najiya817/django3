@@ -1,0 +1,14 @@
+ORM Queries:
+
+CRUD 
+
+1.Create:
+
+    modelname.objects.create(field1=val1,field2=val2,field3=val3............)
+    StudentModel.objects.create(first="Ajith",last="kk",age=20,address="calicut,kerala",phone="9744295203",email="najiyanaji817@gamil.com")
+
+2.Retrieval:
+
+    -all() - complete queryset objects from a model
+    -get() - 
+    -filter() -
