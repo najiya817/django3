@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import View
 from .forms import AddMarkForm,StudentForm
 from django.contrib import messages
+from .models import StudentModel
 
 # Create your views here.
 class AddMark(View):
@@ -29,10 +30,13 @@ class AddStudentView(View):
     def post(self,request,*args,**kwargs):
         form_data=StudentForm(data=request.POST)
         if form_data.is_valid():
-           fn=form_data.cleaned_data.get("first_name")
-           ln=form_data.cleaned_data.get("last_name")
+           fn=form_data.cleaned_data.get("first")
+           ln=form_data.cleaned_data.get("last")
            ag=form_data.cleaned_data.get("age")
            ph=form_data.cleaned_data.get("phone")
+           email=form_data.cleaned_data.get("email")
+           addr=form_data.cleaned_data.get("address")
+           StudentModel.objects.create(first=fn,last=ln,age=ag,phone=ph,email=email,address=addr)
            messages.success(request,"student added succesfull")
            return redirect("h")
         else:

@@ -31,8 +31,8 @@ class AddMarkForm(forms.Form):
             self.add_error("mark5",msg)
 
 class StudentForm(forms.Form):
-    first_name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"enter ur firtst_name"}))
-    last_name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"entre ur last name"}))
+    first=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"enter ur firtst_name"}))
+    last=forms.CharField(max_length=100,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"entre ur last name"}))
     age=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-control","placeholder":"entre ur age"}))
     address=forms.CharField(max_length=100,widget=forms.Textarea(attrs={"class":"form-control","placeholder":"enter address"}))
     email=forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control","placeholder":"entre ur email"}))
@@ -40,12 +40,14 @@ class StudentForm(forms.Form):
     
     def clean(self):
         cleaned_data=super().clean()
-        fn=cleaned_data.get("first_name")
-        ln=cleaned_data.get("last_name")
+        fn=cleaned_data.get("first")
+        ln=cleaned_data.get("last")
         ag=cleaned_data.get("age")
         ph=str(cleaned_data.get("phone"))
+        email=cleaned_data.get("email")
+        addr=cleaned_data.get("address")
         if fn==ln:
-            self.add_error("last_name","first_name and last_name are same")
+            self.add_error("last","first and last are same")
 
         if ag<1:
             msg="age less than zero invalid"
@@ -54,3 +56,6 @@ class StudentForm(forms.Form):
         if len(ph)!=10:
             self.add_error("phone","not 10")
 
+
+
+class ViewStudent()
