@@ -58,4 +58,3 @@ class StudentForm(forms.Form):
 
 
 
-class ViewStudent()

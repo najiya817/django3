@@ -42,3 +42,16 @@ class AddStudentView(View):
         else:
             messages.error(request,"student adding failed!!")
             return render(request,"addstu.html",{"form":form_data})
+        
+
+class StudentListView(View):
+    def get(self,request,*args,**kwargs):
+        res=StudentModel.objects.all()
+        return render(request,"viewstudent.html",{"data":res})
+
+class StudDeleteView(View):
+    def get(self,request,*args,**kwargs):
+        sid=kwargs.get("id")
+        stu=StudentModel.objects.get(id=sid)
+        stu.delete()
+        return redirect("viewstu")
