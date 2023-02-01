@@ -58,4 +58,33 @@ class StudDeleteView(View):
     
 class StudentEditView(View):
     def get(self,request,*args,**kwargs):
-       return render(request,"editstudent.html")
+       id=kwargs.get("id")
+       stu=StudentModel.objects.get(id=id)
+       f=StudentForm(initial={"first":stu.first,"last":stu.last,"age":stu.age,"address":stu.address,"email":stu.email,"phone":stu.phone})
+       return render(request,"editstudent.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        form_data=StudentForm(data=request.POST)
+        if form_data.is_valid():
+           fn=form_data.cleaned_data.get("first")
+           ln=form_data.cleaned_data.get("last")
+           ag=form_data.cleaned_data.get("age")
+           ph=form_data.cleaned_data.get("phone")
+           email=form_data.cleaned_data.get("email")
+           addr=form_data.cleaned_data.get("address")
+           id=kwargs.get("id")
+           stu=StudentModel.objects.get(id=id)
+           stu.first=fn
+           stu.last=ln
+           stu.age=ag
+           stu.address=addr
+           stu.email=email
+           stu.phone=ph
+
+
+           stu.save()
+           messages.success(request,"student details updated succesfully")
+           return redirect("viewstu") 
+        else:
+            messages.error(request,"updation failed")
+            return render(request,"viewstudent.html",{"form":form_data}) 
+                 
