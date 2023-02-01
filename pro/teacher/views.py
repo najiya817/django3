@@ -55,3 +55,7 @@ class StudDeleteView(View):
         stu=StudentModel.objects.get(id=sid)
         stu.delete()
         return redirect("viewstu")
+    
+class StudentEditView(View):
+    def get(self,request,*args,**kwargs):
+       return render(request,"editstudent.html")

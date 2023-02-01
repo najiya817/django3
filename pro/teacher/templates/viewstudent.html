@@ -3,7 +3,7 @@
       <h3>added students</h3>
      
 
-<table class="table tale-bordered">
+<table class="table table-bordered">
       <tr>
             <th>First Name</th>
             <th>Last Name</th>
@@ -22,6 +22,9 @@
       <td>{{i.phone}}</td>
       <td>
             <a href="{% url 'delstu' i.id %}" class="btn btn-danger">delete</a>
+      </td>
+      <td>
+            <a href="{% url 'editstu' i.id %}" class="btn btn-info">edit</a>
       </td>
 </tr>
 {%endfor%}

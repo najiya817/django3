@@ -6,6 +6,8 @@ urlpatterns=[
     path('addstu/',AddStudentView.as_view(),name="addstudent"),
     path('viewstudent/',StudentListView.as_view(),name="viewstu"),
     path('delstudent/<int:id>',StudDeleteView.as_view(),name="delstu"),
+    path('editstudent/<int:id>',StudentEditView.as_view(),name="editstu"),
+
     
 
 ]
