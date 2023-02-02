@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import View
-from .forms import AddMarkForm,StudentForm
+from .forms import AddMarkForm,StudentForm, StudentMForm
 from django.contrib import messages
 from .models import StudentModel
 
@@ -23,25 +23,41 @@ class AddMark(View):
         else:
             return render(request,"addmark.html",{"form":form_data})
     
-class AddStudentView(View):
+# class AddStudentView(View):
+#     def get(self,request,*args,**kwargs):
+#         f=StudentForm()
+#         return render(request,"addstu.html",{"form":f})
+#     def post(self,request,*args,**kwargs):
+#         form_data=StudentForm(data=request.POST)
+#         if form_data.is_valid():
+#            fn=form_data.cleaned_data.get("first")
+#            ln=form_data.cleaned_data.get("last")
+#            ag=form_data.cleaned_data.get("age")
+#            ph=form_data.cleaned_data.get("phone")
+#            email=form_data.cleaned_data.get("email")
+#            addr=form_data.cleaned_data.get("address")
+#            StudentModel.objects.create(first=fn,last=ln,age=ag,phone=ph,email=email,address=addr)
+#            messages.success(request,"student added succesfull")
+#            return redirect("h")
+#         else:
+#             messages.error(request,"student adding failed!!")
+            # return render(request,"addstu.html",{"form":form_data})
+
+class AddStudentMView(View):
     def get(self,request,*args,**kwargs):
-        f=StudentForm()
+        f=StudentMForm()
         return render(request,"addstu.html",{"form":f})
     def post(self,request,*args,**kwargs):
-        form_data=StudentForm(data=request.POST)
+        form_data=StudentMForm(data=request.POST)
         if form_data.is_valid():
-           fn=form_data.cleaned_data.get("first")
-           ln=form_data.cleaned_data.get("last")
-           ag=form_data.cleaned_data.get("age")
-           ph=form_data.cleaned_data.get("phone")
-           email=form_data.cleaned_data.get("email")
-           addr=form_data.cleaned_data.get("address")
-           StudentModel.objects.create(first=fn,last=ln,age=ag,phone=ph,email=email,address=addr)
-           messages.success(request,"student added succesfull")
-           return redirect("h")
+            form_data.save()
+            messages.success(request,"student added succesfull")
+            return redirect("h")
         else:
             messages.error(request,"student adding failed!!")
             return render(request,"addstu.html",{"form":form_data})
+
+
         
 
 class StudentListView(View):
@@ -56,35 +72,54 @@ class StudDeleteView(View):
         stu.delete()
         return redirect("viewstu")
     
-class StudentEditView(View):
-    def get(self,request,*args,**kwargs):
-       id=kwargs.get("id")
-       stu=StudentModel.objects.get(id=id)
-       f=StudentForm(initial={"first":stu.first,"last":stu.last,"age":stu.age,"address":stu.address,"email":stu.email,"phone":stu.phone})
-       return render(request,"editstudent.html",{"form":f})
-    def post(self,request,*args,**kwargs):
-        form_data=StudentForm(data=request.POST)
-        if form_data.is_valid():
-           fn=form_data.cleaned_data.get("first")
-           ln=form_data.cleaned_data.get("last")
-           ag=form_data.cleaned_data.get("age")
-           ph=form_data.cleaned_data.get("phone")
-           email=form_data.cleaned_data.get("email")
-           addr=form_data.cleaned_data.get("address")
-           id=kwargs.get("id")
-           stu=StudentModel.objects.get(id=id)
-           stu.first=fn
-           stu.last=ln
-           stu.age=ag
-           stu.address=addr
-           stu.email=email
-           stu.phone=ph
-
-
-           stu.save()
-           messages.success(request,"student details updated succesfully")
-           return redirect("viewstu") 
-        else:
-            messages.error(request,"updation failed")
-            return render(request,"viewstudent.html",{"form":form_data}) 
+# class StudentEditView(View):
+#     def get(self,request,*args,**kwargs):
+#        id=kwargs.get("id")
+#        stu=StudentModel.objects.get(id=id)
+#        f=StudentForm(initial={"first":stu.first,"last":stu.last,"age":stu.age,"address":stu.address,"email":stu.email,"phone":stu.phone})
+#        return render(request,"editstudent.html",{"form":f})
+#     def post(self,request,*args,**kwargs):
+#         form_data=StudentForm(data=request.POST)
+#         if form_data.is_valid():
+#            fn=form_data.cleaned_data.get("first")
+#            ln=form_data.cleaned_data.get("last")
+#            ag=form_data.cleaned_data.get("age")
+#            ph=form_data.cleaned_data.get("phone")
+#            email=form_data.cleaned_data.get("email")
+#            addr=form_data.cleaned_data.get("address")
+#            id=kwargs.get("id")
+        #    stu=StudentModel.objects.get(id=id)
+        #    stu.first=fn
+        #    stu.last=ln
+        #    stu.age=ag
+        #    stu.address=addr
+        #    stu.email=email
+        #    stu.phone=ph
+        #    stu.save()
+        #    messages.success(request,"student details updated succesfully")
+        #    return redirect("viewstu") 
+        # else:
+        #     messages.error(request,"updation failed")
+        #     return render(request,"viewstudent.html",{"form":form_data}) 
                  
+
+class StudEditMView(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get("id")
+        stu=StudentModel.objects.get(id=id)
+        f=StudentMForm(instance=stu)
+        return render(request,"editstudent.html",{"form":f})
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get("id")
+        stu=StudentModel.objects.get(id=id)
+        form_data=StudentMForm(data=request.POST,instance=stu)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request,"student details updated succesfully")
+            return redirect("viewstu") 
+        else:
+           messages.error(request,"updation failed")
+           return render(request,"editstudent.html",{"form":form_data}) 
+                 
+
+

@@ -1,4 +1,5 @@
 from django import forms
+from .models import StudentModel
 
 class AddMarkForm(forms.Form):
     mark1=forms.IntegerField(label="Enter Mark of subject1")
@@ -38,6 +39,30 @@ class StudentForm(forms.Form):
     email=forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control","placeholder":"entre ur email"}))
     phone=forms.IntegerField(widget=forms.NumberInput(attrs={"class":"form-control","placeholder":"entre ur phonenumber"}))
     
+    def clean(self):
+        cleaned_data=super().clean()
+        fn=cleaned_data.get("first")
+        ln=cleaned_data.get("last")
+        ag=cleaned_data.get("age")
+        ph=str(cleaned_data.get("phone"))
+        email=cleaned_data.get("email")
+        addr=cleaned_data.get("address")
+        if fn==ln:
+            self.add_error("last","first and last are same")
+
+        if ag<1:
+            msg="age less than zero invalid"
+            self.add_error("age","age is invalid")
+
+        if len(ph)!=10:
+            self.add_error("phone","not 10")
+
+
+
+class StudentMForm(forms.ModelForm):
+    class Meta:
+        model=StudentModel
+        fields="__all__"
     def clean(self):
         cleaned_data=super().clean()
         fn=cleaned_data.get("first")
