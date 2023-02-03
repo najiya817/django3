@@ -8,5 +8,6 @@ class StudentModel(models.Model):
     address=models.CharField(max_length=100)
     phone=models.IntegerField()
     email=models.EmailField()
+    image=models.ImageField(upload_to="student_images",null=True)
   
     

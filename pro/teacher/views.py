@@ -48,7 +48,7 @@ class AddStudentMView(View):
         f=StudentMForm()
         return render(request,"addstu.html",{"form":f})
     def post(self,request,*args,**kwargs):
-        form_data=StudentMForm(data=request.POST)
+        form_data=StudentMForm(data=request.POST,files=request.FILES)
         if form_data.is_valid():
             form_data.save()
             messages.success(request,"student added succesfull")
@@ -112,7 +112,7 @@ class StudEditMView(View):
     def post(self,request,*args,**kwargs):
         id=kwargs.get("id")
         stu=StudentModel.objects.get(id=id)
-        form_data=StudentMForm(data=request.POST,instance=stu)
+        form_data=StudentMForm(data=request.POST,instance=stu,files=request.FILES)
         if form_data.is_valid():
             form_data.save()
             messages.success(request,"student details updated succesfully")

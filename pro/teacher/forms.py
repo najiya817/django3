@@ -63,6 +63,20 @@ class StudentMForm(forms.ModelForm):
     class Meta:
         model=StudentModel
         fields="__all__"
+        widgets={
+            "first":forms.TextInput(attrs={"class":"form-control","placeholder":"First Name"}),
+            "last":forms.TextInput(attrs={"class":"form-control","placeholder":"Last Name"}),
+            "age":forms.NumberInput(attrs={"class":"form-control","placeholder":"Age"}),
+            "address":forms.Textarea(attrs={"class":"form-control","placeholder":"Address"}),
+            "email":forms.EmailInput(attrs={"class":"form-control","placeholder":"email"}),
+            "phone":forms.NumberInput(attrs={"class":"form-control","placeholder":"phone number"}),
+            "image":forms.FileInput(attrs={"class":"form-control","placeholder":"image"})
+        }
+
+
+
+
+
     def clean(self):
         cleaned_data=super().clean()
         fn=cleaned_data.get("first")
@@ -71,6 +85,7 @@ class StudentMForm(forms.ModelForm):
         ph=str(cleaned_data.get("phone"))
         email=cleaned_data.get("email")
         addr=cleaned_data.get("address")
+        image=cleaned_data.get("image")
         if fn==ln:
             self.add_error("last","first and last are same")
 
