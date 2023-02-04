@@ -1,6 +1,8 @@
 {% extends 'navbar.html' %}
-{% block nav %}      
-<h1>add students</h1>
+{% block nav %} 
+{% load static %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">    
+<h3>ADD STUDENTS</h3>
 {% if messages %}
 {% for i in messages %}
     {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
@@ -17,12 +19,77 @@
     {%endif%}
 {%endfor%}
 {%endif%}
+<div id="formc" class="container jumbotron">
 <form action="" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <table class=" table table-info">
-  {{form.as_table}}
-  </table>
-  <button class="btn btn-info">submit</button>
-  
+<div class="row">
+
+
+  <div class="col">
+
+    <div class="card" style="width:400px">
+      <img class="card-img-top" src="{% static 'images/img1.jpg' %}" alt="Card image">
+      <div class="card-body">
+        <!-- <h4 class="card-title">John Doe</h4>
+        <p class="card-text">Some example text.</p>
+        <a href="#" class="btn btn-primary">See Profile</a> -->
+        <div class="fieldWrapper">
+          {{form.image.error}}
+          <label for="{{form.image.id_for_label}}">Image</label>
+          {{form.image}}
+        </div>
+    
+      </div>
+    </div>
+    </div>
+    <div class="col">
+    <div class="fieldWrapper">
+      {{form.age.error}}
+      <label for="{{form.age.id_for_label}}">Age</label>
+      {{form.age}}
+    </div>
+    <div class="fieldWrapper">
+      {{form.email.error}}
+      <label for="{{form.email.id_for_label}}">Email</label>
+      {{form.email}}
+    </div>
+    <div class="fieldWrapper">
+      {{form.phone.error}}
+      <label for="{{form.phone.id_for_label}}">Phone</label>
+      {{form.phone}}
+    </div>
+
+  </div>
+
+
+  <div class="col">
+
+    <div class="fieldWrapper">
+      {{form.first.error}}
+      <label for="{{form.first.id_for_label}}">First Name</label>
+      {{form.first}}
+    </div>
+    <div class="fieldWrapper">
+      {{form.last.error}}
+      <label for="{{form.last.id_for_label}}">Last Name</label>
+      {{form.last}}
+    </div>
+    <div class="fieldWrapper">
+      {{form.address.error}}
+      <label for="{{form.address.id_for_label}}">Address</label>
+      {{form.address}}
+    </div>
+    <div class="text-center mt-5">
+    <button class="btn btn-success">Submit</button>
+
+  </div>
+  </div>
+
+
+  <!-- <div class="text-center mt-5">
+    <button class="btn btn-success">Submit</button>
+  </div> -->
+
 </form>
+</div>
 {% endblock nav %}

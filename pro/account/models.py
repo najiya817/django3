@@ -9,4 +9,6 @@ class TeacherModel(models.Model):
     phone=models.IntegerField()
     email=models.EmailField()
     qualification=models.CharField(max_length=100)
-  
+
+
+
