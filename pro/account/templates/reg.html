@@ -1,6 +1,7 @@
 
     {% extends 'navbar.html' %}
     {% block nav %}
+
       <h1>Register Here!!!!</h1>
       {% if messages %}
       {% for i in messages %}
@@ -18,6 +19,7 @@
           {%endif%}
 {%endfor%}
 {%endif%}
+<div id="formd" class="container jumbotron">
       <form action="" method="post">
         {% csrf_token %}
         {{form.as_p}}
