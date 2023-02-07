@@ -20,7 +20,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
  </head>
   <body>
-      <h1>LOGIN</h1>
+    <div class="container  jumbotron ">
+      <h1 class="text-center">LOGIN</h1>
       {% if messages %}
       {% for i in messages %}
           {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
@@ -43,6 +44,9 @@
             {{form.as_p}}
         </table>
         <button class="btn btn-success">login</button>
-      </form>
-  </body>
+      </form><br>
+      <h6>Not registered?</h6>
+      <a href="{% url 'reg' %}" class="btn btn-info ">Register</a>
+      <h3>{{user.first_name}} {{user.last_name}}</h3>
+</div>  </body>
 </html>
