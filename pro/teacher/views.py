@@ -4,8 +4,23 @@ from django.views.generic import View
 from .forms import AddMarkForm,StudentForm, StudentMForm
 from django.contrib import messages
 from .models import StudentModel
+from django.utils.decorators import method_decorator
+
+
+
+#decorator for auth check
+def signin_required(fun):
+    def wrapper(request,*args,**kwargs):
+        if request.user.is_authenticated:
+            return fun(request,*args,**kwargs)
+        else:
+            return redirect("log")
+    return wrapper
+
+
 
 # Create your views here.
+@method_decorator(signin_required,name="dispatch")
 class AddMark(View):
     def get(self,request,*args,**kwargs):
         f=AddMarkForm()
@@ -43,6 +58,8 @@ class AddMark(View):
 #             messages.error(request,"student adding failed!!")
             # return render(request,"addstu.html",{"form":form_data})
 
+
+@method_decorator(signin_required,name="dispatch")
 class AddStudentMView(View):
     def get(self,request,*args,**kwargs):
         f=StudentMForm()
@@ -59,12 +76,16 @@ class AddStudentMView(View):
 
 
         
-
+@method_decorator(signin_required,name="dispatch")
 class StudentListView(View):
     def get(self,request,*args,**kwargs):
-        res=StudentModel.objects.all()
-        return render(request,"viewstudent.html",{"data":res})
+        if request.user.is_authenticated:
+            res=StudentModel.objects.all()
+            return render(request,"viewstudent.html",{"data":res})
+        else:
+            return redirect("log")
 
+@method_decorator(signin_required,name="dispatch")
 class StudDeleteView(View):
     def get(self,request,*args,**kwargs):
         sid=kwargs.get("id")
@@ -103,6 +124,7 @@ class StudDeleteView(View):
         #     return render(request,"viewstudent.html",{"form":form_data}) 
                  
 
+@method_decorator(signin_required,name="dispatch")
 class StudEditMView(View):
     def get(self,request,*args,**kwargs):
         id=kwargs.get("id")
